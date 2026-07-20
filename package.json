@@ -11,17 +11,23 @@
     ],
     "main": "server.js",
     "scripts": {
-        "start": "ui5 serve --open index.html",
-        "start:server": "node server.js",
+        "start": "fiori run --open index.html",
+        "start:ui5": "ui5 serve --open index.html",
+        "start:server": "BAS_ENV=true node server.js",
         "build": "ui5 build --all",
-        "build:self-contained": "ui5 build self-contained --all",
         "lint": "echo \"No linter configured\""
     },
     "devDependencies": {
-        "@ui5/cli": "^3.9.2"
+        "@ui5/cli": "^3.9.2",
+        "@sap/ux-ui5-tooling": "^1.15.4"
+    },
+    "ui5": {
+        "dependencies": [
+            "@sap/ux-ui5-tooling"
+        ]
     },
     "engines": {
-        "node": ">=14.0.0"
+        "node": ">=16.0.0"
     },
     "private": true,
     "license": "Apache-2.0",
