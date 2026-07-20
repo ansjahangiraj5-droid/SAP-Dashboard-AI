@@ -12,8 +12,14 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const PORT = 8080;
-const HOST = "127.0.0.1";   // localhost only — never 0.0.0.0
+const PORT = process.env.PORT || 8080;
+
+// BAS (SAP Business Application Studio) uses port-forwarding:
+// the dev container is NOT directly reachable at 127.0.0.1 from the browser,
+// so we must bind to all interfaces inside the container.
+// On a regular laptop this is still safe because BAS containers are isolated.
+const HOST = process.env.BAS_ENV === "true" ? "0.0.0.0" : "127.0.0.1";
+
 const ROOT = path.join(__dirname, "webapp");
 
 const MIME_TYPES = {
@@ -78,13 +84,18 @@ const server = http.createServer(function (req, res) {
 });
 
 server.listen(PORT, HOST, function () {
+    var sDisplayHost = HOST === "0.0.0.0" ? "0.0.0.0 (BAS mode)" : HOST;
     console.log("=================================================");
     console.log("  AI Smart Dashboard Builder — Dev Server");
     console.log("=================================================");
-    console.log("  Server: http://" + HOST + ":" + PORT);
-    console.log("  Root  : " + ROOT);
+    console.log("  Binding : " + sDisplayHost + ":" + PORT);
+    console.log("  Root    : " + ROOT);
     console.log("-------------------------------------------------");
-    console.log("  Open http://127.0.0.1:8080 in your browser");
+    if (HOST === "0.0.0.0") {
+        console.log("  BAS: use the Ports panel to open the preview");
+    } else {
+        console.log("  Open http://127.0.0.1:" + PORT + " in your browser");
+    }
     console.log("  Press Ctrl+C to stop");
     console.log("=================================================");
 });
@@ -92,7 +103,7 @@ server.listen(PORT, HOST, function () {
 server.on("error", function (err) {
     if (err.code === "EADDRINUSE") {
         console.error("ERROR: Port " + PORT + " is already in use.");
-        console.error("Try: kill $(lsof -t -i:" + PORT + ") or change PORT in server.js");
+        console.error("Fix: PORT=8081 BAS_ENV=true node server.js");
     } else {
         console.error("Server error:", err.message);
     }

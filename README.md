@@ -4,6 +4,53 @@
 
 ---
 
+## ⚡ Running in SAP Business Application Studio (BAS)
+
+### Step 1 — Clone the repository
+Open a **Terminal** in BAS (`Terminal → New Terminal`) and run:
+```bash
+git clone <your-repo-url>
+cd WatsonXSAP
+```
+
+### Step 2 — Install dependencies
+```bash
+npm install
+```
+This installs `@ui5/cli` — the only dev dependency.
+
+### Step 3 — Start the app
+```bash
+npm start
+```
+BAS will automatically show a **"Open in New Tab"** notification. Click it to open the preview.
+
+**Alternative — custom Node server (BAS mode):**
+```bash
+BAS_ENV=true node server.js
+```
+Then open the **Ports** panel (left sidebar) → find port `8080` → click **Open in Browser**.
+
+---
+
+## 🚀 Running Locally (non-BAS)
+
+### Prerequisites
+- Node.js 14+
+- Modern browser (Chrome 100+, Edge 100+, Firefox 100+)
+
+```bash
+git clone <your-repo-url>
+cd WatsonXSAP
+npm install
+npm start
+# OR without UI5 CLI:
+node server.js
+# → open http://127.0.0.1:8080
+```
+
+---
+
 ## 📸 Application Overview
 
 | Page | Description |
