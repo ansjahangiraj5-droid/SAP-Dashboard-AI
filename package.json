@@ -1,30 +1,16 @@
 {
     "name": "ai-smart-dashboard-builder",
     "version": "1.0.0",
-    "description": "AI Smart Dashboard Builder — SAP Fiori + IBM watsonx AI",
-    "keywords": [
-        "sapui5",
-        "fiori",
-        "watsonx",
-        "ibm",
-        "dashboard"
-    ],
+    "description": "AI Smart Dashboard Builder - SAP Fiori + IBM watsonx AI",
+    "keywords": ["sapui5", "fiori", "watsonx", "ibm", "dashboard"],
     "main": "server.js",
     "scripts": {
-        "start": "fiori run --open index.html",
-        "start:ui5": "ui5 serve --open index.html",
+        "start": "ui5 serve --open index.html",
         "start:server": "BAS_ENV=true node server.js",
-        "build": "ui5 build --all",
-        "lint": "echo \"No linter configured\""
+        "build": "ui5 build --all"
     },
     "devDependencies": {
-        "@ui5/cli": "^3.9.2",
-        "@sap/ux-ui5-tooling": "^1.15.4"
-    },
-    "ui5": {
-        "dependencies": [
-            "@sap/ux-ui5-tooling"
-        ]
+        "@ui5/cli": "^3.9.2"
     },
     "engines": {
         "node": ">=16.0.0"
