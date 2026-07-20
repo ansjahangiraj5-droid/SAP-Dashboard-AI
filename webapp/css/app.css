@@ -3,6 +3,25 @@
  * SAP Horizon theme compatible overrides and custom components.
  */
 
+/* ── Full-height App layout (VBox root in App.xml) ─────────── */
+.sapUiBody > div,
+[data-sap-ui-component] {
+    height: 100% !important;
+}
+
+/* Ensure the root VBox and NavContainer fill the viewport */
+.sapMVBox.sapUiSizeCompact {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sapMVBox.sapUiSizeCompact > .sapMNavContainer {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
 /* ── Root Variables ─────────────────────────────────────────── */
 :root {
     --ai-brand-primary: #0070f3;

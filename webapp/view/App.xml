@@ -2,31 +2,50 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
-    xmlns:l="sap.ui.layout"
     xmlns:core="sap.ui.core"
     controllerName="ai.dashboard.controller.App"
     displayBlock="true">
 
-    <f:ShellBar
-        id="shellBar"
-        title="{i18n>shellBarTitle}"
-        secondTitle="{i18n>shellBarSubtitle}"
-        homeIcon="sap-icon://bar-chart"
-        showMenuButton="false"
-        showNavButton="false"
-        class="aiShellBar">
+    <!--
+        sap.m.App is the mandatory root control for a Fiori application.
+        It provides the full-height flex container that all pages live inside.
+        The ShellBar sits above it via a VBox.
+    -->
+    <VBox
+        displayBlock="true"
+        height="100%"
+        width="100%"
+        class="sapUiSizeCompact">
 
-        <!-- Settings button -->
-        <f:additionalContent>
-            <OverflowToolbarButton
-                icon="sap-icon://settings"
-                text="Settings"
-                tooltip="IBM watsonx Settings"
-                press=".onOpenSettings"/>
-        </f:additionalContent>
-    </f:ShellBar>
+        <!-- ── Shell Bar ─────────────────────────────────── -->
+        <f:ShellBar
+            id="shellBar"
+            title="AI Smart Dashboard Builder"
+            secondTitle="Powered by IBM watsonx"
+            homeIcon="sap-icon://bar-chart"
+            showMenuButton="false"
+            showNavButton="false"
+            class="aiShellBar">
+            <f:additionalContent>
+                <OverflowToolbarButton
+                    icon="sap-icon://settings"
+                    text="Settings"
+                    tooltip="IBM watsonx Settings"
+                    press=".onOpenSettings"/>
+            </f:additionalContent>
+        </f:ShellBar>
 
-    <!-- Main Navigation Container -->
-    <NavContainer id="appNav" height="calc(100vh - 3.5rem)" />
+        <!-- ── Navigation Container ──────────────────────── -->
+        <!--
+            flex="1 1 auto" lets the NavContainer fill all remaining height
+            below the ShellBar. The router injects pages into this container
+            via the controlId / controlAggregation defined in manifest.json.
+        -->
+        <NavContainer
+            id="appNav"
+            height="100%">
+        </NavContainer>
+
+    </VBox>
 
 </mvc:View>

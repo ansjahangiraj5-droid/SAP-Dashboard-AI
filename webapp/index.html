@@ -6,9 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>AI Smart Dashboard Builder</title>
 
-    <!-- SAP Fiori Horizon Theme via SAPUI5 CDN -->
+    <!--
+        SAPUI5 bootstrap — src is intentionally relative ("resources/sap-ui-core.js").
+        When served via "fiori run" or "ui5 serve" the UI5 tooling middleware
+        intercepts this path and delivers the framework locally from node_modules.
+        This avoids any CDN/double-bootstrap blank-screen issue in BAS.
+    -->
     <script id="sap-ui-bootstrap"
-        src="https://sapui5.hana.ondemand.com/1.120.17/resources/sap-ui-core.js"
+        src="resources/sap-ui-core.js"
         data-sap-ui-theme="sap_horizon"
         data-sap-ui-libs="sap.m,sap.f,sap.ui.layout,sap.ui.core,sap.viz,sap.suite.ui.microchart,sap.ui.unified"
         data-sap-ui-compatVersion="edge"
@@ -18,10 +23,13 @@
         data-sap-ui-oninit="module:sap/ui/core/ComponentSupport">
     </script>
 
-    <!-- SheetJS (xlsx) for Excel parsing -->
+    <!--
+        SheetJS (xlsx) for Excel/CSV parsing — loaded after SAPUI5 bootstrap.
+        Pinned to 0.20.3 for reproducibility.
+    -->
     <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 
-    <!-- FileSaver for export -->
+    <!-- FileSaver.js for export/download functionality -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"
         integrity="sha512-Ql88B6MnL0djFBl5HhWEMw27vFDAqfMh4Gn7e08vW1ZEaQhICbj7Z8cmLjLDzuFYXgbFq2pCmD1G3d6RPd6g=="
         crossorigin="anonymous"></script>
@@ -36,7 +44,7 @@
     </style>
 </head>
 <body class="sapUiBody" id="content">
-    <!-- ComponentSupport will bootstrap the component from manifest -->
+    <!-- ComponentSupport bootstraps the UIComponent from manifest.json -->
     <div
         data-sap-ui-component
         data-name="ai.dashboard"
