@@ -1,0 +1,113 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+
+    <Dialog
+        id="settingsDialog"
+        title="{i18n>settingsDialogTitle}"
+        contentWidth="520px"
+        draggable="true"
+        resizable="true">
+
+        <content>
+            <VBox class="sapUiSmallMargin">
+
+                <MessageStrip
+                    text="Your API key is stored only in memory and never persisted to disk or sent anywhere except IBM watsonx AI endpoints."
+                    type="Information"
+                    showIcon="true"
+                    class="sapUiSmallMarginBottom"/>
+
+                <SimpleForm
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                    emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0">
+                    <content>
+                        <!-- API Key -->
+                        <Label text="{i18n>apiKeyLabel}" required="true"/>
+                        <Input
+                            id="apiKeyInput"
+                            value="{appState>/watsonx/apiKey}"
+                            placeholder="Enter your IBM watsonx API key (IAM token)"
+                            type="Password"
+                            width="100%"/>
+
+                        <!-- Endpoint -->
+                        <Label text="{i18n>apiEndpointLabel}"/>
+                        <Input
+                            id="endpointInput"
+                            value="{appState>/watsonx/endpoint}"
+                            placeholder="https://us-south.ml.cloud.ibm.com"
+                            width="100%"/>
+
+                        <!-- Model ID -->
+                        <Label text="{i18n>modelIdLabel}"/>
+                        <Select
+                            id="modelSelect"
+                            selectedKey="{appState>/watsonx/modelId}"
+                            width="100%">
+                            <core:Item key="ibm/granite-13b-instruct-v2" text="IBM Granite 13B Instruct v2"/>
+                            <core:Item key="ibm/granite-3-8b-instruct" text="IBM Granite 3 8B Instruct"/>
+                            <core:Item key="ibm/granite-3-2b-instruct" text="IBM Granite 3 2B Instruct"/>
+                            <core:Item key="meta-llama/llama-3-70b-instruct" text="Meta LLaMA 3 70B Instruct"/>
+                            <core:Item key="meta-llama/llama-3-8b-instruct" text="Meta LLaMA 3 8B Instruct"/>
+                        </Select>
+
+                        <!-- Project ID -->
+                        <Label text="{i18n>projectIdLabel}"/>
+                        <Input
+                            id="projectIdInput"
+                            value="{appState>/watsonx/projectId}"
+                            placeholder="Your IBM watsonx project ID (optional)"
+                            width="100%"/>
+
+                        <!-- Max Tokens -->
+                        <Label text="{i18n>maxTokensLabel}"/>
+                        <StepInput
+                            id="maxTokensInput"
+                            value="{appState>/watsonx/maxTokens}"
+                            min="256"
+                            max="4096"
+                            step="256"
+                            width="200px"/>
+
+                        <!-- Temperature -->
+                        <Label text="{i18n>temperatureLabel}"/>
+                        <Slider
+                            id="temperatureSlider"
+                            value="{appState>/watsonx/temperature}"
+                            min="0"
+                            max="1"
+                            step="0.05"
+                            width="200px"
+                            enableTickmarks="true"
+                            showAdvancedTooltip="true"
+                            showHandleTooltip="true"/>
+                    </content>
+                </SimpleForm>
+
+                <!-- Test connection -->
+                <Button
+                    text="Test Connection"
+                    icon="sap-icon://connected"
+                    type="Ghost"
+                    press=".onTestConnection"
+                    class="sapUiTinyMarginTop"/>
+
+            </VBox>
+        </content>
+
+        <buttons>
+            <Button
+                text="{i18n>saveButton}"
+                type="Emphasized"
+                press=".onSaveSettings"/>
+            <Button
+                text="{i18n>cancelButton}"
+                press=".onCloseSettings"/>
+        </buttons>
+    </Dialog>
+
+</core:FragmentDefinition>

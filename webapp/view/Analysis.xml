@@ -1,0 +1,227 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    controllerName="ai.dashboard.controller.Analysis"
+    displayBlock="true">
+
+    <Page id="AnalysisPage"
+        showHeader="false"
+        backgroundDesign="Solid">
+
+        <!-- Toolbar -->
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press=".onNavBack" tooltip="Back to Upload"/>
+                    <Title text="{i18n>analysisPageTitle}" level="H3"/>
+                </contentLeft>
+                <contentRight>
+                    <Button
+                        text="{i18n>downloadAnalysisButton}"
+                        icon="sap-icon://download"
+                        press=".onDownloadAnalysis"/>
+                    <Button
+                        text="{i18n>proceedToDashboardButton}"
+                        icon="sap-icon://show"
+                        type="Emphasized"
+                        press=".onProceedToDashboard"/>
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <ScrollContainer height="100%" vertical="true" horizontal="false" width="100%">
+
+                <!-- Hero Banner -->
+                <VBox class="aiHeroSection" alignItems="Center">
+                    <HBox alignItems="Center">
+                        <core:Icon src="sap-icon://ai" size="2rem" color="white" class="sapUiSmallMarginEnd"/>
+                        <Text class="aiHeroTitle" text="AI Analysis Complete"/>
+                    </HBox>
+                    <Text class="aiHeroSubtitle" text="IBM watsonx has analyzed your dataset and generated personalised dashboard recommendations."/>
+
+                    <!-- Confidence Badge -->
+                    <HBox class="aiWatsonxBadge" alignItems="Center">
+                        <core:Icon src="sap-icon://status-positive" class="sapUiTinyMarginEnd"/>
+                        <Text text="Confidence: {appState>/analysis/confidenceLevel} ({appState>/analysis/confidenceScore}%)"/>
+                    </HBox>
+                </VBox>
+
+                <l:Grid
+                    class="sapUiMediumMarginBegin sapUiMediumMarginEnd sapUiSmallMarginTop"
+                    defaultSpan="XL6 L6 M12 S12"
+                    hSpacing="1"
+                    vSpacing="1">
+
+                    <!-- ── Dataset Summary ─────────────────────── -->
+                    <l:content>
+                        <f:Card class="aiCard" width="100%">
+                            <f:header>
+                                <f:cards.Header
+                                    title="{i18n>datasetSummaryTitle}"
+                                    iconSrc="sap-icon://table-view"/>
+                            </f:header>
+                            <f:content>
+                                <VBox class="sapUiSmallMargin">
+                                    <SimpleForm
+                                        editable="false"
+                                        layout="ResponsiveGridLayout"
+                                        labelSpanXL="6" labelSpanL="6" labelSpanM="6" labelSpanS="12"
+                                        emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0">
+                                        <content>
+                                            <Label text="File Name"/>
+                                            <Text text="{appState>/dataset/fileName}"/>
+                                            <Label text="Total Rows"/>
+                                            <Text text="{appState>/dataset/rowCount}"/>
+                                            <Label text="Total Columns"/>
+                                            <Text text="{appState>/dataset/columnCount}"/>
+                                            <Label text="Numeric Columns"/>
+                                            <Text text="{path: 'appState>/dataset/numericColumns', formatter: '.formatArray'}"/>
+                                            <Label text="Date Columns"/>
+                                            <Text text="{path: 'appState>/dataset/dateColumns', formatter: '.formatArray'}"/>
+                                            <Label text="Generated At"/>
+                                            <Text text="{appState>/analysis/generatedAt}"/>
+                                        </content>
+                                    </SimpleForm>
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+                    </l:content>
+
+                    <!-- ── Confidence Score ───────────────────── -->
+                    <l:content>
+                        <f:Card class="aiCard" width="100%">
+                            <f:header>
+                                <f:cards.Header
+                                    title="{i18n>confidenceScoreTitle}"
+                                    iconSrc="sap-icon://performance"/>
+                            </f:header>
+                            <f:content>
+                                <VBox class="sapUiSmallMargin">
+                                    <HBox justifyContent="SpaceBetween" alignItems="Center" class="sapUiTinyMarginBottom">
+                                        <Title text="{appState>/analysis/confidenceLevel}" level="H2"/>
+                                        <Text text="{appState>/analysis/confidenceScore}%" class="sapMTitle"/>
+                                    </HBox>
+                                    <!-- Progress bar rendered via controller -->
+                                    <VBox id="confidenceBarContainer"/>
+
+                                    <Text text="The confidence score reflects how well the dataset columns and structure matched the requested dashboard type." wrapping="true" class="sapUiSmallText sapUiTinyMarginTop"/>
+
+                                    <!-- Demo mode warning -->
+                                    <MessageStrip
+                                        id="mockWarning"
+                                        text="Demo Mode: This analysis was generated by a built-in simulation. For real AI analysis, configure your IBM watsonx API key in Settings."
+                                        type="Warning"
+                                        showIcon="true"
+                                        visible="{appState>/analysis/isMock}"
+                                        class="sapUiTinyMarginTop"/>
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+                    </l:content>
+
+                    <!-- ── Suggested KPIs ─────────────────────── -->
+                    <l:content>
+                        <f:Card class="aiCard" width="100%">
+                            <f:header>
+                                <f:cards.Header
+                                    title="{i18n>suggestedKPIsTitle}"
+                                    iconSrc="sap-icon://kpi-managing-my-area"/>
+                            </f:header>
+                            <f:content>
+                                <List
+                                    items="{appState>/analysis/kpis}"
+                                    noDataText="No KPIs suggested"
+                                    class="sapUiSmallMarginBegin sapUiSmallMarginEnd">
+                                    <StandardListItem
+                                        title="{appState>title}"
+                                        description="{appState>description}"
+                                        info="{appState>value} {appState>unit}"
+                                        infoState="{= ${appState>trend} === 'Up' ? 'Success' : ${appState>trend} === 'Down' ? 'Error' : 'None' }"
+                                        icon="{= ${appState>trend} === 'Up' ? 'sap-icon://trend-up' : ${appState>trend} === 'Down' ? 'sap-icon://trend-down' : 'sap-icon://kpi-managing-my-area' }"/>
+                                </List>
+                            </f:content>
+                        </f:Card>
+                    </l:content>
+
+                    <!-- ── Suggested Charts ───────────────────── -->
+                    <l:content>
+                        <f:Card class="aiCard" width="100%">
+                            <f:header>
+                                <f:cards.Header
+                                    title="{i18n>suggestedChartsTitle}"
+                                    iconSrc="sap-icon://bar-chart"/>
+                            </f:header>
+                            <f:content>
+                                <List
+                                    items="{appState>/analysis/charts}"
+                                    noDataText="No charts suggested"
+                                    class="sapUiSmallMarginBegin sapUiSmallMarginEnd">
+                                    <CustomListItem>
+                                        <VBox class="sapUiTinyMarginTop sapUiTinyMarginBottom">
+                                            <HBox alignItems="Center">
+                                                <core:Icon src="{= ${appState>type} === 'pie' || ${appState>type} === 'donut' ? 'sap-icon://pie-chart' : ${appState>type} === 'line' || ${appState>type} === 'area' ? 'sap-icon://line-chart' : 'sap-icon://bar-chart' }" size="1.2rem" class="sapUiSmallMarginEnd"/>
+                                                <VBox>
+                                                    <Text text="{appState>title}" class="sapMText sapUiSmallText" design="Bold"/>
+                                                    <Text text="Type: {appState>type} | X: {appState>xAxis} | Y: {appState>yAxis}" class="sapUiSmallText"/>
+                                                </VBox>
+                                            </HBox>
+                                        </VBox>
+                                    </CustomListItem>
+                                </List>
+                            </f:content>
+                        </f:Card>
+                    </l:content>
+
+                    <!-- ── Suggested Filters ──────────────────── -->
+                    <l:content>
+                        <f:Card class="aiCard" width="100%">
+                            <f:header>
+                                <f:cards.Header
+                                    title="{i18n>suggestedFiltersTitle}"
+                                    iconSrc="sap-icon://filter"/>
+                            </f:header>
+                            <f:content>
+                                <List
+                                    items="{appState>/analysis/filters}"
+                                    noDataText="No filters suggested"
+                                    class="sapUiSmallMarginBegin sapUiSmallMarginEnd">
+                                    <StandardListItem
+                                        title="{appState>label}"
+                                        description="Column: {appState>column}"
+                                        info="{appState>type}"
+                                        icon="sap-icon://filter"/>
+                                </List>
+                            </f:content>
+                        </f:Card>
+                    </l:content>
+
+                    <!-- ── Business Insights ──────────────────── -->
+                    <l:content>
+                        <f:Card class="aiCard" width="100%">
+                            <f:header>
+                                <f:cards.Header
+                                    title="{i18n>businessInsightsTitle}"
+                                    iconSrc="sap-icon://lightbulb"/>
+                            </f:header>
+                            <f:content>
+                                <VBox
+                                    id="insightsList"
+                                    class="sapUiSmallMargin">
+                                    <!-- Rendered programmatically in controller -->
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+                    </l:content>
+
+                </l:Grid>
+
+                <!-- Bottom padding -->
+                <VBox height="3rem"/>
+            </ScrollContainer>
+        </content>
+    </Page>
+</mvc:View>

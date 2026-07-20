@@ -1,0 +1,125 @@
+{
+    "_version": "1.65.0",
+    "sap.app": {
+        "id": "ai.dashboard",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori-freestyle:basic",
+            "version": "1.14.5"
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "sap-icon://bar-chart",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "rootView": {
+            "viewName": "ai.dashboard.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "app"
+        },
+        "dependencies": {
+            "minUI5Version": "1.120.0",
+            "libs": {
+                "sap.m": {},
+                "sap.f": {},
+                "sap.ui.layout": {},
+                "sap.ui.core": {},
+                "sap.viz": {},
+                "sap.suite.ui.microchart": {},
+                "sap.ui.unified": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "ai.dashboard.i18n.i18n"
+                }
+            },
+            "app": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "model/appModel.json"
+            }
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "type": "JSON",
+                "viewType": "XML",
+                "viewPath": "ai.dashboard.view",
+                "controlId": "appNav",
+                "controlAggregation": "pages",
+                "async": true
+            },
+            "routes": [
+                {
+                    "name": "Landing",
+                    "pattern": "",
+                    "target": "Landing"
+                },
+                {
+                    "name": "Analysis",
+                    "pattern": "analysis",
+                    "target": "Analysis"
+                },
+                {
+                    "name": "Dashboard",
+                    "pattern": "dashboard",
+                    "target": "Dashboard"
+                }
+            ],
+            "targets": {
+                "Landing": {
+                    "viewType": "XML",
+                    "viewId": "Landing",
+                    "viewName": "Landing",
+                    "viewLevel": 1
+                },
+                "Analysis": {
+                    "viewType": "XML",
+                    "viewId": "Analysis",
+                    "viewName": "Analysis",
+                    "viewLevel": 2
+                },
+                "Dashboard": {
+                    "viewType": "XML",
+                    "viewId": "Dashboard",
+                    "viewName": "Dashboard",
+                    "viewLevel": 3
+                }
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/app.css"
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,250 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:l="sap.ui.layout"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:core="sap.ui.core"
+    xmlns:unified="sap.ui.unified"
+    controllerName="ai.dashboard.controller.Landing"
+    displayBlock="true">
+
+    <Page id="LandingPage"
+        showHeader="false"
+        backgroundDesign="Solid"
+        class="aiLandingPage">
+
+        <content>
+            <ScrollContainer height="100%" vertical="true" horizontal="false" width="100%">
+
+                <!-- ── Hero Section ──────────────────────────────── -->
+                <VBox class="aiHeroSection">
+                    <VBox alignItems="Center">
+                        <Text class="aiHeroTitle" text="AI Smart Dashboard Builder"/>
+                        <Text class="aiHeroSubtitle" text="Upload your business data and let IBM watsonx AI automatically generate KPIs, charts, and insights — no coding required."/>
+                        <HBox class="aiWatsonxBadge" alignItems="Center">
+                            <core:Icon src="sap-icon://ai" class="sapUiSmallMarginEnd"/>
+                            <Text text="Powered by IBM watsonx Granite"/>
+                        </HBox>
+                    </VBox>
+                </VBox>
+
+                <!-- ── Message Strip Area ────────────────────────── -->
+                <VBox class="sapUiMediumMarginBegin sapUiMediumMarginEnd sapUiTinyMarginTop">
+                    <MessageStrip
+                        id="infoStrip"
+                        text="To use IBM watsonx AI, open Settings and enter your API key. Without it, the app runs in Demo mode with simulated AI responses."
+                        type="Information"
+                        showIcon="true"
+                        showCloseButton="true"
+                        class="sapUiSmallMarginBottom"/>
+                </VBox>
+
+                <!-- ── Main Content Grid ─────────────────────────── -->
+                <l:Grid
+                    class="sapUiMediumMarginBegin sapUiMediumMarginEnd"
+                    defaultSpan="XL6 L6 M12 S12"
+                    hSpacing="1"
+                    vSpacing="1">
+
+                    <!-- LEFT COLUMN: Upload + Prompt -->
+                    <l:content>
+
+                        <!-- Upload Card -->
+                        <f:Card class="aiCard" width="100%">
+                            <f:header>
+                                <f:cards.Header
+                                    title="{i18n>uploadCardTitle}"
+                                    subtitle="{i18n>uploadCardDescription}"
+                                    iconSrc="sap-icon://upload-to-cloud"/>
+                            </f:header>
+                            <f:content>
+                                <VBox class="sapUiSmallMargin">
+
+                                    <!-- Drop Zone -->
+                                    <VBox id="dropZone"
+                                        class="aiDropZone"
+                                        alignItems="Center"
+                                        justifyContent="Center">
+                                        <core:Icon
+                                            src="sap-icon://upload-to-cloud"
+                                            class="aiDropIcon"/>
+                                        <Text
+                                            text="{i18n>dropZoneText}"
+                                            class="aiDropZoneText sapUiSmallMarginBottom"/>
+                                        <Text
+                                            text="{i18n>uploadHintText}"
+                                            class="aiDropZoneHint"/>
+                                    </VBox>
+
+                                    <!-- Hidden File Input -->
+                                    <HBox class="sapUiSmallMarginTop" justifyContent="Center">
+                                        <Button
+                                            id="uploadBtn"
+                                            text="{i18n>uploadButtonText}"
+                                            icon="sap-icon://attachment"
+                                            type="Emphasized"
+                                            press=".onUploadPress"/>
+                                        <core:HTML
+                                            id="fileInputWrapper"
+                                            content="&lt;input type='file' id='fileInput' accept='.xlsx,.xls,.csv' style='display:none'/&gt;"/>
+                                    </HBox>
+
+                                    <!-- Upload Status -->
+                                    <VBox
+                                        id="uploadStatus"
+                                        class="sapUiSmallMarginTop"
+                                        visible="{appState>/fileUploaded}">
+                                        <MessageStrip
+                                            text="File uploaded: {appState>/uploadedFileName} ({appState>/dataset/rowCount} rows, {appState>/dataset/columnCount} columns)"
+                                            type="Success"
+                                            showIcon="true"
+                                            showCloseButton="false"/>
+                                    </VBox>
+
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+
+                        <!-- Prompt Card -->
+                        <f:Card class="aiCard sapUiSmallMarginTop" width="100%">
+                            <f:header>
+                                <f:cards.Header
+                                    title="{i18n>promptCardTitle}"
+                                    subtitle="{i18n>promptCardDescription}"
+                                    iconSrc="sap-icon://ai"/>
+                            </f:header>
+                            <f:content>
+                                <VBox class="sapUiSmallMargin">
+                                    <TextArea
+                                        id="promptInput"
+                                        value="{appState>/userPrompt}"
+                                        placeholder="{i18n>promptPlaceholder}"
+                                        rows="5"
+                                        width="100%"
+                                        growing="true"
+                                        class="aiPromptArea"/>
+
+                                    <!-- Quick Prompts -->
+                                    <Label text="Quick Prompts:" class="sapUiTinyMarginTop sapUiTinyMarginBottom"/>
+                                    <HBox wrap="Wrap" class="sapUiTinyMarginBottom">
+                                        <Button text="Sales Dashboard" type="Ghost" press=".onQuickPrompt" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                                            <customData>
+                                                <core:CustomData key="prompt" value="Build a sales performance dashboard with regional breakdown and KPIs"/>
+                                            </customData>
+                                        </Button>
+                                        <Button text="Warehouse KPIs" type="Ghost" press=".onQuickPrompt" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                                            <customData>
+                                                <core:CustomData key="prompt" value="Create a warehouse operations KPI dashboard with inventory and throughput metrics"/>
+                                            </customData>
+                                        </Button>
+                                        <Button text="HR Analytics" type="Ghost" press=".onQuickPrompt" class="sapUiTinyMarginEnd sapUiTinyMarginBottom">
+                                            <customData>
+                                                <core:CustomData key="prompt" value="Show employee attendance and HR analytics dashboard"/>
+                                            </customData>
+                                        </Button>
+                                        <Button text="Finance Overview" type="Ghost" press=".onQuickPrompt" class="sapUiTinyMarginBottom">
+                                            <customData>
+                                                <core:CustomData key="prompt" value="Build a financial overview dashboard with revenue, costs, and profit margins"/>
+                                            </customData>
+                                        </Button>
+                                    </HBox>
+
+                                    <!-- Generate Button -->
+                                    <Button
+                                        id="generateBtn"
+                                        text="{i18n>generateButtonText}"
+                                        icon="sap-icon://ai"
+                                        type="Emphasized"
+                                        width="100%"
+                                        press=".onGenerateDashboard"
+                                        class="aiGenerateBtn sapUiSmallMarginTop"/>
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+
+                    </l:content>
+
+                    <!-- RIGHT COLUMN: Dataset Preview -->
+                    <l:content>
+                        <f:Card class="aiCard" width="100%" visible="{appState>/fileUploaded}">
+                            <f:header>
+                                <f:cards.Header
+                                    title="{i18n>previewCardTitle}"
+                                    subtitle="{i18n>previewCardDescription}"
+                                    iconSrc="sap-icon://table-view"/>
+                            </f:header>
+                            <f:content>
+                                <VBox class="sapUiSmallMargin">
+
+                                    <!-- Column Stats -->
+                                    <HBox wrap="Wrap" class="sapUiTinyMarginBottom">
+                                        <ObjectStatus
+                                            title="{i18n>columnDetectedLabel}"
+                                            text="{appState>/dataset/columnCount}"
+                                            state="Information"
+                                            class="sapUiSmallMarginEnd"/>
+                                        <ObjectStatus
+                                            title="{i18n>rowsDetectedLabel}"
+                                            text="{appState>/dataset/rowCount}"
+                                            state="Success"
+                                            class="sapUiSmallMarginEnd"/>
+                                        <ObjectStatus
+                                            title="{i18n>numericColumnsLabel}"
+                                            text="{appState>/dataset/numericColumns/length}"
+                                            state="Information"
+                                            class="sapUiSmallMarginEnd"/>
+                                        <ObjectStatus
+                                            title="{i18n>dateColumnsLabel}"
+                                            text="{appState>/dataset/dateColumns/length}"
+                                            state="Warning"/>
+                                    </HBox>
+
+                                    <!-- Column Tags -->
+                                    <Label text="Detected Columns:" class="sapUiTinyMarginTop sapUiTinyMarginBottom"/>
+                                    <FlexBox id="columnTagsBox" wrap="Wrap" class="sapUiTinyMarginBottom"/>
+
+                                    <!-- Sample Data Table -->
+                                    <Table
+                                        id="previewTable"
+                                        growing="false"
+                                        alternateRowColors="true"
+                                        noDataText="{i18n>noFileUploadedText}"
+                                        class="aiPreviewTable sapUiTinyMarginTop">
+                                    </Table>
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+
+                        <!-- Empty state when no file -->
+                        <f:Card class="aiCard" width="100%" visible="{= !${appState>/fileUploaded} }">
+                            <f:content>
+                                <VBox
+                                    alignItems="Center"
+                                    justifyContent="Center"
+                                    height="300px"
+                                    class="sapUiSmallMargin">
+                                    <core:Icon src="sap-icon://document-text" size="4rem" color="#94a3b8" class="sapUiSmallMarginBottom"/>
+                                    <Title text="No Dataset Uploaded" level="H4" class="sapUiTinyMarginBottom"/>
+                                    <Text text="Upload an Excel or CSV file to see a preview of your data here." wrapping="true" textAlign="Center" class="sapUiSmallText"/>
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+
+                    </l:content>
+                </l:Grid>
+
+                <!-- Bottom padding -->
+                <VBox height="2rem"/>
+            </ScrollContainer>
+        </content>
+
+        <!-- Busy Overlay -->
+        <dependents>
+            <BusyDialog
+                id="busyDialog"
+                text="{appState>/busyMessage}"
+                title="Please Wait"/>
+        </dependents>
+    </Page>
+</mvc:View>

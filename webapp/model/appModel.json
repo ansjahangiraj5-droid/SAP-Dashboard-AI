@@ -1,0 +1,16 @@
+{
+    "watsonx": {
+        "apiKey": "",
+        "endpoint": "https://us-south.ml.cloud.ibm.com",
+        "modelId": "ibm/granite-13b-instruct-v2",
+        "projectId": "",
+        "maxTokens": 2048,
+        "temperature": 0.3
+    },
+    "ui": {
+        "defaultChartHeight": "300px",
+        "maxPreviewRows": 10,
+        "maxAnalysisRows": 200,
+        "maxFileSize": 10485760
+    }
+}

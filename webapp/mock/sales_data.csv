@@ -1,0 +1,31 @@
+Region,Country,Product,Category,SalesRep,Quarter,Year,Units,Revenue,Cost,Profit,Rating,Date
+North America,USA,Laptop Pro X1,Electronics,Alice Johnson,Q1,2024,120,144000,96000,48000,4.5,2024-01-15
+North America,USA,Smartphone Z9,Electronics,Bob Williams,Q1,2024,250,87500,52500,35000,4.2,2024-01-20
+Europe,Germany,Laptop Pro X1,Electronics,Clara Müller,Q1,2024,85,102000,68000,34000,4.7,2024-02-01
+Europe,UK,Wireless Headset,Accessories,David Brown,Q1,2024,430,64500,25800,38700,4.4,2024-02-10
+APAC,Japan,Tablet Ultra 10,Electronics,Emma Tanaka,Q1,2024,190,95000,57000,38000,4.6,2024-02-15
+North America,Canada,Smart Watch S3,Wearables,Frank Lee,Q1,2024,310,77500,46500,31000,4.1,2024-02-20
+North America,USA,Laptop Pro X1,Electronics,Alice Johnson,Q2,2024,145,174000,116000,58000,4.5,2024-04-05
+Europe,France,Smartphone Z9,Electronics,Pierre Dubois,Q2,2024,220,77000,46200,30800,4.3,2024-04-12
+APAC,Australia,Wireless Headset,Accessories,Grace Kim,Q2,2024,380,57000,22800,34200,4.2,2024-04-18
+North America,USA,Smart Watch S3,Wearables,Henry Adams,Q2,2024,280,70000,42000,28000,4.0,2024-05-02
+Europe,Germany,Tablet Ultra 10,Electronics,Clara Müller,Q2,2024,170,85000,51000,34000,4.8,2024-05-10
+APAC,China,Laptop Pro X1,Electronics,Lily Chen,Q2,2024,200,240000,160000,80000,4.6,2024-05-15
+Middle East,UAE,Smartphone Z9,Electronics,Omar Sheikh,Q2,2024,150,52500,31500,21000,4.2,2024-05-22
+North America,USA,Wireless Headset,Accessories,Alice Johnson,Q3,2024,510,76500,30600,45900,4.3,2024-07-08
+Europe,Spain,Smart Watch S3,Wearables,Maria Garcia,Q3,2024,290,72500,43500,29000,4.1,2024-07-15
+APAC,India,Tablet Ultra 10,Electronics,Raj Patel,Q3,2024,220,110000,66000,44000,4.5,2024-07-20
+North America,Mexico,Laptop Pro X1,Electronics,Carlos Rivera,Q3,2024,90,108000,72000,36000,4.4,2024-08-01
+Europe,UK,Wireless Headset,Accessories,David Brown,Q3,2024,620,93000,37200,55800,4.6,2024-08-12
+APAC,Japan,Smart Watch S3,Wearables,Emma Tanaka,Q3,2024,340,85000,51000,34000,4.3,2024-08-18
+North America,USA,Laptop Pro X1,Electronics,Alice Johnson,Q4,2024,180,216000,144000,72000,4.7,2024-10-05
+Europe,Germany,Smartphone Z9,Electronics,Clara Müller,Q4,2024,260,91000,54600,36400,4.4,2024-10-12
+APAC,Australia,Laptop Pro X1,Electronics,Grace Kim,Q4,2024,110,132000,88000,44000,4.5,2024-10-20
+North America,Canada,Wireless Headset,Accessories,Frank Lee,Q4,2024,480,72000,28800,43200,4.2,2024-11-01
+Europe,France,Tablet Ultra 10,Electronics,Pierre Dubois,Q4,2024,200,100000,60000,40000,4.6,2024-11-10
+APAC,China,Smart Watch S3,Wearables,Lily Chen,Q4,2024,400,100000,60000,40000,4.4,2024-11-15
+Middle East,UAE,Wireless Headset,Accessories,Omar Sheikh,Q4,2024,200,30000,12000,18000,4.1,2024-11-22
+North America,USA,Smartphone Z9,Electronics,Bob Williams,Q4,2024,320,112000,67200,44800,4.3,2024-12-01
+Europe,UK,Smart Watch S3,Wearables,David Brown,Q4,2024,270,67500,40500,27000,4.2,2024-12-10
+APAC,India,Wireless Headset,Accessories,Raj Patel,Q4,2024,590,88500,35400,53100,4.5,2024-12-15
+North America,USA,Tablet Ultra 10,Electronics,Henry Adams,Q4,2024,160,80000,48000,32000,4.4,2024-12-20
